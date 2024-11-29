@@ -1,0 +1,97 @@
+format = """
+$username\
+$directory\
+$time\
+$fill\
+$python\
+$golang\
+$rust\
+$package\
+$git_branch\
+$git_status\
+$docker_context\
+$cmd_duration\
+$line_break\
+$character
+"""
+
+command_timeout = 5000
+dd_newline = true 
+
+[character]
+success_symbol = '[➜](bold green)'
+error_symbol = '[❯](bold red)'
+
+[fill]
+symbol = ' '
+
+[package]
+symbol = '󰏗 '
+format = '[$symbol$version]($style) '
+
+[username]
+show_always = true
+format = '[ Archon ]($style)'
+
+[directory]
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+read_only = "🔒"
+read_only_style = "red"
+
+[directory.substitutions]
+"Documents" = "󰈙"
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+"Desktop" = "💻" 
+"src" = "🛠️"
+
+[docker_context]
+symbol = "🐳"
+style = "bg:#06969A"
+detect_files = ['docker-compose.yml', 'docker-compose.yaml', 'Dockerfile']
+detect_extensions = ['Dockerfile']
+format = '[ $symbol $context ]($style) $path'
+
+[git_branch]
+symbol = ""
+format = '[on $symbol $branch ]($style)'
+
+[git_status]
+up_to_date = '[✓](green)'
+format = '([\[$all_status$ahead_behind\]]($style) )'
+
+
+[golang]
+symbol = " "
+style = "bg:#86BBD8"
+format = '[ $symbol ($version) ]($style)'
+
+[python]
+style = "yellow bold"
+symbol = "  "
+python_binary = 'python3'
+detect_extensions = ['py', 'ipynb']
+format = '[$symbol(($version) ($virtualenv) )]($style)'
+
+[rust]
+symbol = "🦀"
+detect_extensions = ['rs']
+detect_files = ['Cargo.toml']
+style = "red bold"
+format = '[ $symbol ($version) ]($style)'
+
+[cmd_duration]
+min_time = 500
+style = 'fg:purple'
+format = '[$duration]($style)'
+
+[time]
+disabled = false
+time_format = "%R" 
+style = 'purple'
+format = '[ $time ]($style)'
+
+
