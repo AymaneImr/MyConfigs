@@ -12,6 +12,8 @@ return {
 				"tailwindcss-language-server",
 				"typescript-language-server",
 				"css-lsp",
+				"gopls",
+				"rust-analyzer",
 			})
 		end,
 	},
@@ -26,12 +28,12 @@ return {
 				cssls = {},
 				tailwindcss = {
 					root_dir = function(...)
-						return require("lspconfig.util").root_pattern(".git")(...)
+						return require("lspconfig.util").root_pattern(".project", ".git")(...)
 					end,
 				},
 				tsserver = {
 					root_dir = function(...)
-						return require("lspconfig.util").root_pattern(".git")(...)
+						return require("lspconfig.util").root_pattern(".project", ".git")(...)
 					end,
 					single_file_support = false,
 					settings = {
@@ -152,5 +154,19 @@ return {
 				},
 			})
 		end,
+	},
+	{
+		"ray-x/go.nvim",
+		dependencies = { -- optional packages
+			"ray-x/guihua.lua",
+			"neovim/nvim-lspconfig",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		config = function()
+			require("go").setup()
+		end,
+		event = { "CmdlineEnter" },
+		ft = { "go", "gomod" },
+		build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
 	},
 }

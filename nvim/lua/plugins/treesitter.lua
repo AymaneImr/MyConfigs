@@ -13,6 +13,8 @@ return {
 				"fish",
 				"gitignore",
 				"go",
+				"typescript",
+				"tsx",
 				"graphql",
 				"http",
 				"java",
@@ -21,8 +23,13 @@ return {
 				"scss",
 				"sql",
 				"svelte",
+				"python",
 			},
 
+			highlight = {
+				enable = true,
+				additional_vim_regex_highlighting = false,
+			},
 			-- matchup = {
 			-- 	enable = true,
 			-- },
@@ -54,9 +61,7 @@ return {
 			},
 		},
 		config = function(_, opts)
-			local TS = require("nvim-treesitter")
-			TS.setup(opts)
-
+			require("nvim-treesitter.configs").setup(opts)
 			-- MDX
 			vim.filetype.add({
 				extension = {
