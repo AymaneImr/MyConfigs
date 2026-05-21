@@ -3,18 +3,18 @@ return {
 
 	{
 		"nvim-treesitter/nvim-treesitter",
+		lazy = false,
 		build = ":TSUpdate",
+
 		opts = {
 			ensure_installed = {
+				"go",
 				"astro",
 				"cmake",
 				"cpp",
 				"css",
 				"fish",
 				"gitignore",
-				"go",
-				"typescript",
-				"tsx",
 				"graphql",
 				"http",
 				"java",
@@ -24,12 +24,16 @@ return {
 				"sql",
 				"svelte",
 				"python",
+				"tsx",
+				"typescript",
 			},
 
 			highlight = {
 				enable = true,
 				additional_vim_regex_highlighting = false,
 			},
+
+			event = { "BufReadPost", "BufNewFile" },
 			-- matchup = {
 			-- 	enable = true,
 			-- },
@@ -60,15 +64,5 @@ return {
 				},
 			},
 		},
-		config = function(_, opts)
-			require("nvim-treesitter.configs").setup(opts)
-			-- MDX
-			vim.filetype.add({
-				extension = {
-					mdx = "mdx",
-				},
-			})
-			vim.treesitter.language.register("markdown", "mdx")
-		end,
 	},
 }

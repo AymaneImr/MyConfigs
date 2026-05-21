@@ -169,4 +169,37 @@ return {
 		ft = { "go", "gomod" },
 		build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
 	},
+	{
+		"mrcjkb/rustaceanvim",
+		-- To avoid being surprised by breaking changes,
+		-- I recommend you set a version range
+		version = "^9",
+		-- This plugin implements proper lazy-loading (see :h lua-plugin-lazy).
+		-- No need for lazy.nvim to lazy-load it.
+		lazy = false,
+		ft = "rust",
+	},
+	{
+		"rust-lang/rust.vim",
+		ft = "rust",
+		init = function()
+			vim.g.rustfmt_autosave = 1
+		end,
+	},
+	{
+		"saecki/crates.nvim",
+		ft = { "toml" },
+		config = function()
+			require("crates").setup({
+				completion = {
+					cmp = {
+						enabled = true,
+					},
+				},
+			})
+			require("cmp").setup.buffer({
+				sources = { { name = "crates" } },
+			})
+		end,
+	},
 }

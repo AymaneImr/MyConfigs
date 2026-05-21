@@ -19,6 +19,7 @@ return {
 			}
 		end,
 	},
+
 	{
 		"catppuccin/nvim",
 		lazy = false,
@@ -31,6 +32,7 @@ return {
 			}
 		end,
 	},
+
 	{
 		"rebelot/kanagawa.nvim",
 		lazy = false,
