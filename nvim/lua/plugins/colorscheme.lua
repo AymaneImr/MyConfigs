@@ -1,4 +1,18 @@
+local all_themes = vim.fn.getcompletion("", "color")
+
 return {
+	{
+		"zaldih/themery.nvim",
+		lazy = false,
+		theme = vim.fn.getcompletion("", "color"),
+		config = function()
+			require("themery").setup({
+				-- add the config here
+				themes = all_themes, -- Your list of installed colorschemes.
+				livePreview = true,
+			})
+		end,
+	},
 	{
 		"craftzdog/solarized-osaka.nvim",
 		lazy = true,

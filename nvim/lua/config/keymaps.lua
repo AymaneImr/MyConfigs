@@ -5,6 +5,11 @@ discipline.cowboy()
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
+-- Colorscheme picker
+keymap.set("n", "<Leader>tp", function()
+	vim.cmd("Themery")
+end, { desc = "Colorscheme picker" })
+
 -- Do things without affecting the registers
 keymap.set("n", "x", '"_x')
 keymap.set("n", "<Leader>p", '"0p')
