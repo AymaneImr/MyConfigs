@@ -44,25 +44,70 @@ return {
 			})
 		end,
 	},
-
-	-- copilot
 	{
-		"zbirenbaum/copilot.lua",
+		"vyfor/cord.nvim",
+		branch = "client-server",
+		build = ":Cord update",
+		event = "VeryLazy",
+
 		opts = {
-			suggestion = {
-				auto_trigger = true,
-				keymap = {
-					accept = "<C-l>",
-					accept_word = "<M-l>",
-					accept_line = "<M-S-l>",
-					next = "<M-]>",
-					prev = "<M-[>",
-					dismiss = "<C-]>",
+			buttons = {
+				{
+					label = function(opts)
+						return opts.repo_url and opts.workspace or nil
+					end,
+					url = function(opts)
+						return opts.repo_url
+					end,
 				},
 			},
-			filetypes = {
-				markdown = true,
-				help = true,
+
+			advanced = {
+				discord = {
+					reconnect = {
+						enabled = true,
+					},
+				},
+			},
+
+			display = {
+				theme = "catppuccin",
+				flavor = "accent",
+				swap_icons = true,
+			},
+
+			variables = true,
+
+			text = {
+				editing = "Editing ${filename} • [${diagnostics} errors]",
+				viewing = "Reading ${filename} • [${diagnostics} errors]",
+				workspace = "In ${workspace}",
+
+				terminal = function(opts)
+					return "In " .. (opts.name or "kitty")
+				end,
+			},
+
+			extensions = {
+				"zellij",
+				diagnostics = {
+					scope = "buffer",
+
+					severity = {
+						min = vim.diagnostic.severity.ERROR,
+					},
+
+					override = false,
+				},
+			},
+
+			idle = {
+				details = function(opts)
+					return "Taking a break from " .. opts.workspace
+				end,
+
+				state = "Be right back",
+				tooltip = "😴",
 			},
 		},
 	},
