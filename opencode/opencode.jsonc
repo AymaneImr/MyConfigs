@@ -1,0 +1,155 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": [
+    "~/.config/opencode/INSTRUCTIONS.md"
+  ],
+  "shell": "fish",
+  "default_agent": "general",
+  "autoupdate": "notify",
+  "watcher": {
+    "ignore": [
+      "node_modules/**",
+      "dist/**",
+      "build/**",
+      ".git/**",
+      "target/**",
+    ]
+  },
+  "attachment": {
+    "image": {
+      "auto_resize": true,
+      "max_width": 2000,
+      "max_height": 2000,
+      "max_base64_bytes": 5242880
+    }
+  },
+  "agent": {
+    "code-review": {
+      "model": "deepseek/deepseek-v4-flash",
+      "description": "Reviews code for best practices and potential issues",
+      "prompt": "You are a code reviewer. Focus on security, performance, maintainability, and quality code, eeport concrete issues and suggested fixes. Do not modify code.",
+      "mode": "subagent",
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": true,
+      },
+    },
+    "general": {
+      "model": "deepseek/deepseek-v4-flash",
+      "description": "Answer regular question with the least amount of tokens possible.",
+      "prompt": "You are a General-purpose coding agent. Understand the existing codebase before making changes, follow its conventions, avoid unnecessary modifications, and verify your work when possible.",
+      "mode": "primary",
+      "tools": {
+        "edit": true,
+        "write": false,
+        "bash": true,
+        "skill": true,
+        "question": true,
+      }
+    },
+    "plan": {
+      "model": "deepseek/deepseek-v4-flash",
+      "description": "Analyzes tasks and creates clear implementation plans",
+      "prompt": "You are a planning agent. Analyze the codebase and task, identify relevant files and dependencies, and create a concise step-by-step implementation plan. Do not modify code",
+      "mode": "primary",
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false,
+        "grep": true,
+        "skill": true,
+        "question": true,
+      }
+    },
+    "build-pro": {
+      "model": "deepseek/deepseek-v4-pro",
+      "description": "Implements complex features and solves difficult engineering tasks",
+      "prompt": "You are a senior software engineer. Implement tasks thoroughly, understand the existing codebase before changing it, follow project conventions, avoid unnecessary changes, and verify your implementation when possible.",
+      "mode": "primary",
+      "tools": {
+        "edit": true,
+        "write": true,
+        "bash": true,
+        "grep": true,
+        "skill": true,
+      }
+    },
+    "build": {
+      "model": "deepseek/deepseek-v4-flash",
+      "description": "Implements features and fixes bugs efficiently",
+      "prompt": "You are a practical coding agent. Implement the requested changes using the existing codebase and conventions. Keep changes focused, avoid unnecessary complexity, and verify your work when possible.",
+      "mode": "primary",
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "grep": true,
+        "skill": true,
+      }
+    },
+    "debugger": {
+      "model": "deepseek/deepseek-v4-flash",
+      "description": "Diagnoses and fixes bugs and runtime and compile time errors",
+      "prompt": "You are a debugging agent. Reproduce and investigate issues, identify the root cause, make the smallest appropriate fix, and verify that the issue is resolved.",
+      "mode": "subagent",
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true,
+      }
+    }
+  },
+  "permission": {
+    "read": {
+      "*": "allow",
+      "*.env": "deny",
+      "*.env.*": "deny",
+      "*.env.example": "allow",
+      "~/.ssh/*": "deny",
+      "~/.gnupg/*": "deny",
+    },
+    "external_directory": {
+      "~/*": "ask",
+      "/*": "deny",
+    },
+    "skill": "allow",
+    "bash": {
+      "*": "allow",
+      // git perm
+      "git init": "deny",
+      "git add *": "deny",
+      "git commit *": "deny",
+      "git push *": "deny",
+      "git pull *": "deny",
+      "git merge *": "deny",
+      "git rebase *": "deny",
+      "git reset *": "deny",
+      "git checkout *": "deny",
+      "git switch *": "deny",
+      "git branch *": "deny",
+      "git stash *": "deny",
+      "git cherry-pick *": "deny",
+      "git revert *": "deny",
+      "git clean *": "deny",
+      "git tag *": "deny",
+      "git remote *": "deny",
+      "git clone *": "deny",
+      // shell
+      "rm *": "ask",
+      "mv *": "ask",
+      "kill *": "ask",
+      "pkill *": "ask",
+      "paru *": "ask",
+      "pacman *": "ask",
+      "curl *": "ask",
+      "wget *": "ask",
+      "shutdown *": "deny",
+      "reboot *": "deny",
+      "poweroff *": "deny",
+      // sudo big no no
+      "sudo *": "ask",
+      "su *": "ask",
+    }
+  }
+}
